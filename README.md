@@ -1,7 +1,7 @@
 # How to do things 
 
 ## Active the virtual env 
-``` python venv -m .venv ```
+``` python -m venv .venv ```
 ``` source .venv/bin/active ```
 
 ## Download Django 
