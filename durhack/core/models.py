@@ -8,11 +8,17 @@ class Question(models.Model):
     order           = models.IntegerField()
     questionaire    = models.ForeignKey(Questionaire, on_delete=models.CASCADE, related_name="questions", null=True)
 
+    def __str__(self):
+        return self.text
+
 class Person(models.Model):
     session_id      = models.CharField()
     name            = models.CharField()
 
 class Answers(models.Model):
     question        = models.ForeignKey(Question, on_delete=models.CASCADE)
-    response        = models.TextField()
+    response        = models.BigIntegerField
     person          = models.ForeignKey(Person, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.response

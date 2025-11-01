@@ -23,4 +23,5 @@ from core.views import *
 urlpatterns = [
     path("", homePage, name='index'),
     path("admin/", admin.site.urls),
+    path("<int:questionaire_id>/", questionnaire, name='questionarie')
 ]
