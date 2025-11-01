@@ -13,7 +13,10 @@ def dot_p(vector1, vector2): #dot product of 2 vectors as list
     return dotP 
 
 def sqrt_sum(vector): #calculating size of vector (list representation)
-    return sum(vector)**0.5 #returning the square root of the vector elements added together (size of vector)
+    sumOfSquares = 0
+    for vNum in vector: #getting the sum of squares of vector
+        sumOfSquares += vNum**2
+    return sumOfSquares**0.5 #returning the square root of the vector elements added together (size of vector)
 
 #function for the vector similarity score
 def v_cosine_similarity(vector1,vector2):
