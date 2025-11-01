@@ -2,3 +2,5 @@ durhack/core/__pycache__
 durhack/core/migrations/__pycache__
 
 durhack/durhack/__pycache__
+.venv
+.venv
