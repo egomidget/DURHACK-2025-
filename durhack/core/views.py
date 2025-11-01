@@ -43,3 +43,12 @@ def questionnaire(request, questionaire_id):
         "questionnaire": questionnaire,
         "form": form
     })
+
+
+from django.shortcuts import redirect
+
+def qr_redirect(request):
+    return redirect('/questionnaire/1/')
+
+
+

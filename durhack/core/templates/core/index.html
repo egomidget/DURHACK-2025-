@@ -1,11 +1,23 @@
+{% load static %}
 {% block head %}
-<title>Home Page whoop whoop </title>
+  <title>The Redbridge Theory</title>
+  <link rel="icon" type="image/png" href="{% static 'images/logo.png' %}">
+  <link rel="stylesheet" href="{% static 'css/index.css' %}">
 {% endblock %}
 
+
 {% block body %}
+  {% include 'core/nav.html' %}
+  <div class="container">
+    <h1>The Redbridge Theory</h1>
+    <p>Building bridges for pulling bitches</p>
 
-{% include 'core/nav.html' %}
+    <div class="redboxes">
+      <div class="redbox"><p>What is the Redbridge Theory?</p></div>
+      <div class="redbox"><p>Scan QR code</p></div>
+      <div class="redbox"><p>How does it work?</p></div>
+    </div>
 
-<h1>This is the home page guys</h1>
-
+    <button type="button">Match now!</button>
+  </div>
 {% endblock %}
