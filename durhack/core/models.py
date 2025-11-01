@@ -17,7 +17,7 @@ class Person(models.Model):
 
 class Answers(models.Model):
     question        = models.ForeignKey(Question, on_delete=models.CASCADE)
-    response        = models.BigIntegerField
+    response        = models.BigIntegerField()
     person          = models.ForeignKey(Person, on_delete=models.CASCADE)
 
     def __str__(self):
