@@ -28,10 +28,12 @@ def v_cosine_similarity(vector1,vector2):
     return cSimilarity #return a value between -1 and 1: 1 means more similar
 
 #FILLING 2D ARRAY FUNCTIONS
-def array_matches_list():
+def array_matches_list(dimenson):
     #use a for loop to iterate through the 2d array for matrix and do the v cosine similarity for 
-    for i in range:
-        pass
+    for row in range(0,dimenson):
+        for col in range(0,dimenson):
+            pass
+        
 
 #1.get the sliding scale values for each question and have it as a vector, represented in a list - list for the methods like sum
 
