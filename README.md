@@ -6,3 +6,7 @@
 
 ## Download Django 
 ``` pip install -r requirements.txt ```
+
+## How to run the server 
+``` python manage.py runserver ```
+You access it on your broswer via ` localhost:8000 ` 
