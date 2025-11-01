@@ -10,3 +10,8 @@
 ## How to run the server 
 ``` python manage.py runserver ```
 You access it on your broswer via ` localhost:8000 ` 
+
+## SuperUser password 
+mercedes
+mercedes@example.com
+1234
