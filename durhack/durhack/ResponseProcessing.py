@@ -6,6 +6,7 @@
 # Import the necessary models from the 'core' application
 from core.models import Person, Answers, Question
 from core.utils import *#i wanna import my utils -sarah
+
 def process_answers():
     # Initialize the main list that will hold all individual person's answer lists
     PeoplesAnswers = {}
@@ -48,6 +49,11 @@ def process_answers():
 
     #sarahs part now yay (hashtag no ai hastag authentic hash critical thinking)
     #gameplan
+
+    # if len(PeoplesAnswers)%2 != 0:#if odd number
+    #     #hardcode mercedes in (and add mercedes info to array)
+    #     allTheAnswers.append(allTheAnswers[1][:-2]*0.5)
+
     return input_vectors_output_pairs(PeoplesAnswers) #use the array and my function from utils to get the paired IDs return
     #[("ID1","ID3",0.99),("ID2","ID6",0.67)] is the format of above
     #pair return can be processed then
