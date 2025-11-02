@@ -5,6 +5,7 @@
 
 # Import the necessary models from the 'core' application
 from core.models import Person, Answers, Question
+from utils import *#i wanna import my utils -sarah
 
 # Initialize the main list that will hold all individual person's answer lists
 PeoplesAnswers = []
@@ -40,3 +41,15 @@ for person in all_people:
 # The 'PeoplesAnswers' list is now populated in memory and can be
 # accessed by whichever script or shell session imported this file.
 # No output is printed, as requested.
+
+
+
+#sarahs part now yay (hashtag no ai hastag authentic hash critical thinking)
+#gameplan
+pairedIndexes = input_vectors_output_pairs(PeoplesAnswers) #use the array and my function from utils to get the pair return
+#[(0,3),(2,5),..] is the format of above
+#pair return can be processed then
+
+#todo next
+#display a page or even an alert idc that says {ur partner name} is your match by {number}%.
+#note, ur partner name accessed from paired indexes,number needs to multiplu by 100 and round
