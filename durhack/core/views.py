@@ -1,16 +1,13 @@
-
 from django.shortcuts import render, get_object_or_404, redirect
+from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from core.models import Questionaire, Person, Answers, Question
-import uuid
 from core.forms import DynamicQuestionnaireForm
-
-####
-from django.shortcuts import render, redirect
-from django.http import HttpResponse
+import uuid
 import qrcode
+import base64
 from io import BytesIO
-####
+import os
 
 
 def questionnaire(request, questionaire_id):
@@ -35,9 +32,6 @@ def questionnaire(request, questionaire_id):
                         response=answer_text,
                         person=person
                     )
-
-            # calling function for loading peoples submissions
-
             return redirect('thank_you')
     else:
         form = DynamicQuestionnaireForm(questions=questions)
@@ -48,32 +42,32 @@ def questionnaire(request, questionaire_id):
     })
 
 
-from django.shortcuts import redirect
 
 def qr_redirect(request):
     return redirect('/questionnaire/1/')
 
-from django.shortcuts import render
 
 def qr(request):
     return render(request, 'core/qr.html')
 
-#####
-import qrcode
-import base64
-from io import BytesIO
-from django.shortcuts import render
 
 def homePage(request):
-    print("✅ homePage() function was called")  # <-- add this line
+    try:
+        qr_url = "http://127.0.0.1:8000/questionnaire/1/"
+        qr = qrcode.QRCode(version=1, box_size=10, border=5)
+        qr.add_data(qr_url)
+        qr.make(fit=True)
 
-    qr_url = "http://127.0.0.1:8000/questionnaire/1/"
-    qr = qrcode.make(qr_url)
+        img = qr.make_image(fill_color="black", back_color="white")
+        buffer = BytesIO()
+        img.save(buffer, format="PNG")
+        qr_image = base64.b64encode(buffer.getvalue()).decode('utf-8')
 
-    buffer = BytesIO()
-    qr.save(buffer, format="PNG")
-    qr_image = base64.b64encode(buffer.getvalue()).decode()
+        print("✅ QR generated successfully")
 
-    print("✅ QR code successfully generated and sent to template!")  # <-- add this line too
+        # ✅ Use Django's render function instead of manual open
+        return render(request, "core/index.html", {"qr_image": qr_image})
 
-    return render(request, "core/index.html", {"qr_image": qr_image})
+    except Exception as e:
+        print("❌ Error generating QR:", e)
+        return HttpResponse("<h1>Error generating QR code</h1>")
