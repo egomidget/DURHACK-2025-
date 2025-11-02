@@ -61,6 +61,19 @@ def graph_match(arrayOfSimilarities):
     weightedGraph = create_graph(arrayOfSimilarities) #get graph
     return list(nx.algorithms.matching.max_weight_matching(weightedGraph, maxcardinality=True))#get 2 item tuples of pairs. one will be left unpaired
 
+def pairsIntoNames(pairTuples, ogVectorList, similarities): #get format like [("ID1","ID3",0.99),("ID2","ID6",0.67)]
+    results = []
+    for i, j in pairTuples:
+        id1 = ogVectorList[i][-1]  #getting the id from the og vector big list (assuming id is last)
+        id2 = ogVectorList[j][-1]
+       
+        similarity = similarities[i][j]
+        results.append((id1, id2, similarity))
+    
+    return results
+
+
+
         
 def input_vectors_output_pairs(allTheAnswers):
     #1.get the sliding scale values for each question (input) and have it as a vector, represented in a list - list for the methods like sum
@@ -69,7 +82,7 @@ def input_vectors_output_pairs(allTheAnswers):
     similaritiesMatrix = array_matches_list(allTheAnswers)
 
     #use this array to find best matches
-    return graph_match(similaritiesMatrix) 
+    return pairsIntoNames(graph_match(similaritiesMatrix),allTheAnswers,similaritiesMatrix)
 
 
 #if time have external ai to asses?
