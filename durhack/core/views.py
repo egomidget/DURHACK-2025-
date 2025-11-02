@@ -9,6 +9,8 @@ import base64
 from io import BytesIO
 import os
 
+from django.shortcuts import render
+from durhack import ResponseProcessing 
 
 def questionnaire(request, questionaire_id):
     questionnaire = get_object_or_404(Questionaire, id=questionaire_id)
@@ -71,3 +73,5 @@ def homePage(request):
     except Exception as e:
         print("❌ Error generating QR:", e)
         return HttpResponse("<h1>Error generating QR code</h1>")
+    
+
