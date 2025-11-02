@@ -152,3 +152,18 @@ STATICFILES_DIRS = [BASE_DIR / "core" / "static"]
 
 
 ####
+
+
+import os
+
+# Static files (CSS, JS)
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'core', 'static')]
+
+# Media (for your images if you want to keep them outside static/)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# Add this if your images folder is in the project root
+STATICFILES_DIRS += [os.path.join(BASE_DIR, 'images')]
+####
