@@ -36,10 +36,12 @@ def array_matches_list(vectorsArray): #2d vectors input as an array
     #use a for loop to iterate through the 2d array for matrix and do the v cosine similarity for 
     similarityArray = [[None] * dimension for _ in range(dimension)]#make list
     for row in range(0,dimension): 
-        for col in range(i+1,dimension): #optimised by mirroring over the leading diagonal and only filling in top triangle (change the 0 here to i+1 and mirror) not doing yet incase breaks
+        for col in range(row+1,dimension): #optimised by mirroring over the leading diagonal and only filling in top triangle (change the 0 here to i+1 and mirror) not doing yet incase breaks
             if row == col:
                 continue
-            similarityArray[row][col] = v_cosine_similarity(vectorsArray[row],vectorsArray[col])
+            similarityValue = v_cosine_similarity(vectorsArray[row],vectorsArray[col])
+            similarityArray[row][col] = similarityValue
+            similarityArray[col][row] = similarityValue #mirroring across leading diagonal
     return similarityArray
 
 #GETTING SIMILARITY PAIR
@@ -60,17 +62,14 @@ def graph_match(arrayOfSimilarities):
     return list(nx.algorithms.matching.max_weight_matching(weightedGraph, maxcardinality=True))#get 2 item tuples of pairs. one will be left unpaired
 
         
+def input_vectors_output_pairs(allTheAnswers):
+    #1.get the sliding scale values for each question (input) and have it as a vector, represented in a list - list for the methods like sum
 
-#1.get the sliding scale values for each question and have it as a vector, represented in a list - list for the methods like sum
+    #2.get the similarity score from function and have as a 2d array, null for itself position
+    similaritiesMatrix = array_matches_list(allTheAnswers)
 
-#2.get the similarity score from function and have as a 2d array, null for itself position
+    #use this array to find best matches
+    return graph_match(similaritiesMatrix) 
 
-#use this array to find best matches 
-
-'''
-def main():
-    array_matches_list(dimenson, vectorsArray)
-    graph_match():
-    '''
 
 #if time have external ai to asses?
