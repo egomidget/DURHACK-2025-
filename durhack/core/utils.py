@@ -9,7 +9,7 @@ import networkx as nx #using this for the graph for built in blossom algorithm
 #sub function
 def dot_p(vector1, vector2): #dot product of 2 vectors as list
     dotP = 0
-    for i in range(0,len(vector1)): #iterating through each index
+    for i in range(0,len(vector1)-2): #iterating through each index minus 2 to ignore the name and session id
         #multiplying the ith vector values together and adding it to running total
         dotP += vector1[i]*vector2[i]
     return dotP 
@@ -17,7 +17,7 @@ def dot_p(vector1, vector2): #dot product of 2 vectors as list
 #sub function
 def sqrt_sum(vector): #calculating size of vector (list representation)
     sumOfSquares = 0
-    for vNum in vector: #getting the sum of squares of vector
+    for vNum in vector[:-2]: #getting the sum of squares of vector
         sumOfSquares += vNum**2
     return sumOfSquares**0.5 #returning the square root of the vector elements added together (size of vector)
 
@@ -31,7 +31,8 @@ def v_cosine_similarity(vector1,vector2):
     return cSimilarity #return a value between -1 and 1: 1 means more similar
 
 #FILLING 2D ARRAY FUNCTIONS
-def array_matches_list(dimension, vectorsArray): #vectors input as an array
+def array_matches_list(vectorsArray): #2d vectors input as an array
+    dimension = len(vectorsArray) #minus 2 to ignore name and session id
     #use a for loop to iterate through the 2d array for matrix and do the v cosine similarity for 
     similarityArray = [[None] * dimension for _ in range(dimension)]#make list
     for row in range(0,dimension): 
