@@ -90,6 +90,8 @@ def see_match(request):
     session_id = request.session.get('session_id')
 
     person = Person.objects.get(session_id=session_id)
+    match = Match.find_match(person)
+    return render(request, 'core/match.html', context={'person_a': match.person_a, 'person_b': match.person_b, 'score': match.format_score()})
 
 def homePage(request):
     try:
