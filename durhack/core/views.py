@@ -92,7 +92,7 @@ def process_matches(request):
             print('error')
             continue
         
-    return HttpResponse("Matches Made")
+    return render(request, "core/matches.html")
 
 def loading(request):
     return render(request, 'core/loading.html')
@@ -107,7 +107,7 @@ def see_match(request):
 
 def homePage(request):
     try:
-        qr_url = "http://127.0.0.1:8000/questionnaire/1/"
+        qr_url = "http://46.101.94.205:8000/questionnaire/1/"
         qr = qrcode.QRCode(version=1, box_size=10, border=5)
         qr.add_data(qr_url)
         qr.make(fit=True)
