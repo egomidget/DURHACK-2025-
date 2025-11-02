@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -115,7 +116,7 @@
       margin-bottom: 20px;
     }
 
-    button {
+    .prema-button {
       padding: 12px 24px;
       border: none;
       background-color: #e63946;
@@ -126,6 +127,7 @@
       letter-spacing: 1px;
       transition: transform 0.2s ease, box-shadow 0.2s ease;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      text-decoration: none;
     }
 
     button:hover {
@@ -136,7 +138,7 @@
 </head>
 
 <body>
-  <img src="{% static 'images/logoside.png' %}" alt="Redbridge Logo" class="logo">
+  <img src="{% static 'logo.png' %}" alt="Redbridge Logo" class="logo">
 
   <h1>The Redbridge Theory</h1>
   <p class="subtitle">Building bridges between computer scientist and socialising💘</p>
@@ -155,7 +157,8 @@
 
   <div class="qr-section">
     <img src="data:image/png;base64,{{ qr_image }}" alt="QR Code" class="qr-image">
-    <button type="button" onclick="window.location.href='/loading/'">💞 Match Now 💞</button>
+    <a class="prema-button" type="button" href="{% url 'loading' %}">💞 Match Now 💞</a>
+
   </div>
 </body>
 </html>

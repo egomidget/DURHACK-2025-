@@ -63,7 +63,8 @@ def qr_redirect(request):
 def qr(request):
     return render(request, 'core/qr.html')
 
-def process_matches(matches_data):
+def process_matches(request):
+    matches_data = process_answers()
     for session_a, session_b, score in matches_data:
         try:
             person_a = Person.objects.get(session_id=session_a)
@@ -84,11 +85,17 @@ def process_matches(matches_data):
                     score=score
                 )
 
-            return HttpResponse("Matches Made")
 
         except Person.DoesNotExist:
             # In case one of the people wasn't found (shouldn’t happen normally)
+            # return HttpResponse("Matches NotMade")
+            print('error')
             continue
+        
+    return HttpResponse("Matches Made")
+
+def loading(request):
+    return render(request, 'core/loading.html')
 
 
 def see_match(request):
@@ -116,7 +123,7 @@ def homePage(request):
 
     except Exception as e:
         print("❌ Error generating QR:", e)
-        return HttpResponse("<h1>Error generating QR code</h1>")
+        return render(request, "core/index.html")
     
 def show_matches(request):
     paired_ids = process_answers()
