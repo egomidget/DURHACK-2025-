@@ -8,6 +8,11 @@ import qrcode
 import base64
 from io import BytesIO
 import os
+from django.shortcuts import render
+from durhack.ResponseProcessing import process_answers
+from core.models import Person 
+from django.urls import reverse
+from django.shortcuts import redirect, render
 
 from django.shortcuts import render
 from durhack import ResponseProcessing 
@@ -67,11 +72,37 @@ def homePage(request):
 
         print("✅ QR generated successfully")
 
-        # ✅ Use Django's render function instead of manual open
         return render(request, "core/index.html", {"qr_image": qr_image})
 
     except Exception as e:
         print("❌ Error generating QR:", e)
         return HttpResponse("<h1>Error generating QR code</h1>")
     
+def show_matches(request):
+    paired_ids = process_answers()
+    matches = []
+    for id1, id2, score in paired_ids:
+        try:
+            person1 = Person.objects.get(session_id=id1)
+            person2 = Person.objects.get(session_id=id2)
+            matches.append({
+                'person1_name': person1.name,
+                'person2_name': person2.name,
+                'score': round(score * 100, 2)
+            })
+        except Person.DoesNotExist:
+            continue
+    return render(request, 'core/matches.html', {'matches': matches})
 
+
+def loading_view(request):
+    """
+    Displays the loading screen before showing match results.
+    """
+    return render(request, 'core/loading.html')
+
+def go_to_matches(request):
+    """
+    Redirects to the matches page after the loading screen.
+    """
+    return redirect('show_matches')

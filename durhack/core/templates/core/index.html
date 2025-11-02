@@ -1,37 +1,161 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Redbridge Theory</title>
-    <link rel="icon" type="image/png" href="{% static 'images/logo.png' %}">
-    <link rel="stylesheet" href="index.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Redbridge Theory</title>
+  <link rel="icon" type="image/png" href="{% static 'images/logo.png' %}">
+
+
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      background: linear-gradient(135deg, #ffc6c6, #ff9e9e);
+      background-size: 200% 200%;
+      animation: bgmove 6s ease infinite;
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      font-family: 'Press Start 2P', cursive;
+      color: #2e2e2e;
+      text-align: center;
+      padding: 30px 20px;
+    }
+
+    @keyframes bgmove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .logo {
+      width: 130px;
+      margin-bottom: 25px;
+      filter: drop-shadow(0 0 6px #fff);
+    }
+
+    h1 {
+      font-size: 1.1rem;
+      color: red;
+      text-shadow: 0 0 3px #fff, 0 0 6px #ff7b7b;
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      font-size: 0.75rem;
+      color: #333;
+      text-shadow: 0 0 3px #fff, 0 0 6px #ff7b7b;
+      margin-bottom: 40px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 30px;
+      max-width: 900px;
+      width: 100%;
+      justify-items: center;
+      align-items: start;
+    }
+
+    .pair {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 15px;
+      padding: 20px;
+      width: 240px;
+      border: 2px solid #fff;
+      box-shadow: 0 5px 12px rgba(0, 0, 0, 0.2);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25);
+    }
+
+    .question {
+      color: #e63946;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+    }
+
+    .answer {
+      color: #000;
+      font-size: 0.65rem;
+      line-height: 1.4;
+      text-shadow: none;
+    }
+
+    .qr-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 50px;
+    }
+
+    .qr-image {
+      width: 220px;
+      height: 220px;
+      border: 5px solid #fff;
+      border-radius: 20px;
+      padding: 10px;
+      background-color: #fff;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+      margin-bottom: 20px;
+    }
+
+    button {
+      padding: 12px 24px;
+      border: none;
+      background-color: #e63946;
+      color: white;
+      font-size: 0.75rem;
+      border-radius: 10px;
+      cursor: pointer;
+      letter-spacing: 1px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
+    }
+  </style>
 </head>
+
 <body>
+  <img src="{% static 'images/logoside.png' %}" alt="Redbridge Logo" class="logo">
 
-    
-    <img src="../durhack/images/logoside.png" alt="bridge image" style="display:block; margin:20px auto; width:150px;">
+  <h1>The Redbridge Theory</h1>
+  <p class="subtitle">Building bridges between computer scientist and socialising💘</p>
 
-    <div class="container">
-        <h1>The Redbridge Theory</h1>
-        <p>Building bridges for pulling bitches</p>
-
-        <div class="redboxes">
-            <p>What is the Redbridge Theory?</p>
-            <p>Scan QR code</p>
-            <p>How does it work?</p>
-        </div>
-
-        
-        <div class="qr-section">
-            <img src="data:image/png;base64,{{ qr_image }}" alt="QR Code" class="qr-image">
-        </div>
-
-        <button type="button">Match now!</button>
+  <div class="grid">
+    <div class="pair">
+      <div class="card question">What is the Redbridge Theory?</div>
+      <div class="card answer">Based on the Chinese red string legend, Redbridge connects soulmates bound by fate through invisible ties.</div>
     </div>
 
+    <div class="pair">
+      <div class="card question">How does it work?</div>
+      <div class="card answer">Scan the QR code and answer our algorithmic questions to find your perfect match — romantic or platonic.</div>
+    </div>
+  </div>
+
+  <div class="qr-section">
+    <img src="data:image/png;base64,{{ qr_image }}" alt="QR Code" class="qr-image">
+    <button type="button" onclick="window.location.href='/loading/'">💞 Match Now 💞</button>
+  </div>
 </body>
 </html>

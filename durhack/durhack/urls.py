@@ -17,6 +17,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from core.views import homePage, questionnaire, qr_redirect
+from django.urls import path
+from . import views
+from django.urls import path
+from . import views
+from django.contrib import admin
+from django.urls import path, include
 
 urlpatterns = [
     path("", homePage, name="index"),
@@ -25,4 +31,12 @@ urlpatterns = [
     path("qr/", qr_redirect, name="qr_redirect"),
 ]
 
+urlpatterns = [
+    path('matches/', views.show_matches, name='show_matches'),
 
+]
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('', include('core.urls')),  
+]

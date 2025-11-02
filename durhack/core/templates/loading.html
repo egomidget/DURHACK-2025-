@@ -1,40 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>The Redbridge Theory - Your Match</title>
-    <link rel="icon" type="image/png" href="{% static 'images/logo.png' %}">
-  
-    <style>
-        .loader {
-            border: 16px solid #f3f3f3; 
-            border-top: 16px solid red;
-            border-radius: 50%;
-            width: 120px;
-            height: 120px;
-            animation: spin 2s linear infinite;
-        }
+  <meta charset="UTF-8">
+  <title>The Redbridge Theory - Loading</title>
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
-        .loading-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            background-color: pink;
-        }
-    </style>
+    body {
+      background: linear-gradient(135deg, #ffc6c6, #ff9e9e);
+      background-size: 200% 200%;
+      animation: bgmove 5s ease infinite;
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Press Start 2P', cursive;
+      color: #2e2e2e;
+      text-align: center;
+    }
+
+    @keyframes bgmove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .loading-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 25px; 
+      animation: fadein 1s ease-in;
+    }
+
+    h1 {
+      font-size: 1.2rem;
+      color: #000;
+      text-shadow: 0 0 3px #fff, 0 0 6px #ff7b7b;
+      margin: 0;
+    }
+
+    p {
+      font-size: 0.8rem;
+      color: #333;
+      text-shadow: 0 0 3px #fff, 0 0 6px #ff7b7b;
+      margin: 0;
+    }
+
+    .spinner {
+      width: 80px;
+      height: 80px;
+      border: 8px solid #fff;
+      border-top: 8px solid #e63946;
+      border-radius: 50%;
+      animation: spin 1.2s linear infinite;
+      box-shadow: 0 0 15px rgba(230, 57, 70, 0.6);
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @keyframes fadein {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+  </style>
 </head>
+
 <body>
-    <div class="loading-container text-center">
-        <h1>Loading...</h1>
-        <p>We’re collecting all the data and finding your match</p>
-        <div class="loader mt-4"></div>
-    </div>
+  <div class="loading-container">
+    <h1>Loading...</h1>
+    <p>We’re collecting all the data and finding your match 💘</p>
+    <div class="spinner"></div>
+  </div>
 </body>
 </html>

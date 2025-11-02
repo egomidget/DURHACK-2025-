@@ -5,7 +5,7 @@
 
 # Import the necessary models from the 'core' application
 from core.models import Person, Answers, Question
-from utils import *#i wanna import my utils -sarah
+from core.utils import *#i wanna import my utils -sarah
 def process_answers():
     # Initialize the main list that will hold all individual person's answer lists
     PeoplesAnswers = []
