@@ -1,23 +1,39 @@
 {% load static %}
-{% block head %}
-  <title>The Redbridge Theory</title>
-  <link rel="icon" type="image/png" href="{% static 'images/logo.png' %}">
-  <link rel="stylesheet" href="{% static 'css/index.css' %}">
-{% endblock %}
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Redbridge Theory</title>
+    <link rel="icon" type="image/png" href="{% static 'images/logo.png' %}">
+    <link rel="stylesheet" href="{% static 'files.css' %}">
+</head>
 
-{% block body %}
-  {% include 'core/nav.html' %}
-  <div class="container">
-    <h1>The Redbridge Theory</h1>
-    <p>Building bridges for pulling bitches</p>
+<body>
+    {% include 'core/nav.html' %}
 
-    <div class="redboxes">
-      <div class="redbox"><p>What is the Redbridge Theory?</p></div>
-      <div class="redbox"><p>Scan QR code</p></div>
-      <div class="redbox"><p>How does it work?</p></div>
+    <div class="container">
+        <h1>The Redbridge Theory</h1>
+        <p>Building bridges for pulling bitches</p>
+
+        <div class="redboxes">
+            <div class="redbox"><p>What is the Redbridge Theory?</p></div>
+            <div class="redbox">
+                <p>Scan QR code</p>
+                {% if qr_image %}
+                    <div style="text-align:center; margin-top:10px;">
+                        <img src="data:image/png;base64,{{ qr_image }}" alt="QR Code" 
+                             style="width:250px; height:250px;">
+                    </div>
+                {% else %}
+                    <p>No QR code generated.</p>
+                {% endif %}
+            </div>
+            <div class="redbox"><p>How does it work?</p></div>
+        </div>
+
+        <button type="button">Match now!</button>
     </div>
-
-    <button type="button">Match now!</button>
-  </div>
-{% endblock %}
+</body>
+</html>
