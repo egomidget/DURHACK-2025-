@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
-from core.models import Questionaire, Person, Answers, Question
+from core.models import Questionaire, Person, Answers, Question, Match
 from core.forms import DynamicQuestionnaireForm
 import uuid
 import qrcode
@@ -15,7 +15,7 @@ from django.urls import reverse
 from django.shortcuts import redirect, render
 
 from django.shortcuts import render
-from durhack import ResponseProcessing 
+from durhack.ResponseProcessing import *
 
 def questionnaire(request, questionaire_id):
     questionnaire = get_object_or_404(Questionaire, id=questionaire_id)
@@ -30,16 +30,22 @@ def questionnaire(request, questionaire_id):
     if request.method == "POST":
         form = DynamicQuestionnaireForm(request.POST, questions=questions)
         if form.is_valid():
+            person.name=form.cleaned_data.get('name')
+            person.save()
             for question in questions:
                 field_name = f"question_{question.id}"
                 answer_text = form.cleaned_data.get(field_name)
                 if answer_text:
-                    Answers.objects.create(
+                    a, _ = Answers.objects.get_or_create(
                         question=question,
-                        response=answer_text,
+                        # response=answer_text,
                         person=person
                     )
-            return redirect('thank_you')
+                    a.response = answer_text
+                    a.save()
+
+            print(process_answers())
+            return HttpResponse("<h1>Thank you, please wait while we process the results</h1>")
     else:
         form = DynamicQuestionnaireForm(questions=questions)
 
@@ -57,6 +63,40 @@ def qr_redirect(request):
 def qr(request):
     return render(request, 'core/qr.html')
 
+def process_matches(matches_data):
+    for session_a, session_b, score in matches_data:
+        try:
+            person_a = Person.objects.get(session_id=session_a)
+            person_b = Person.objects.get(session_id=session_b)
+
+            # Avoid duplicate (A↔B and B↔A)
+            if not Match.objects.filter(
+                person_a=person_a,
+                person_b=person_b
+            ).exists() and not Match.objects.filter(
+                person_a=person_b,
+                person_b=person_a
+            ).exists():
+
+                Match.objects.create(
+                    person_a=person_a,
+                    person_b=person_b,
+                    score=score
+                )
+
+            return HttpResponse("Matches Made")
+
+        except Person.DoesNotExist:
+            # In case one of the people wasn't found (shouldn’t happen normally)
+            continue
+
+
+def see_match(request):
+    session_id = request.session.get('session_id')
+
+    person = Person.objects.get(session_id=session_id)
+    match = Match.find_match(person)
+    return render(request, 'core/match.html', context={'person_a': match.person_a, 'person_b': match.person_b, 'score': match.format_score()})
 
 def homePage(request):
     try:
