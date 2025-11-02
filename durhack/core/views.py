@@ -5,10 +5,13 @@ from core.models import Questionaire, Person, Answers, Question
 import uuid
 from core.forms import DynamicQuestionnaireForm
 
+####
+from django.shortcuts import render, redirect
+from django.http import HttpResponse
+import qrcode
+from io import BytesIO
+####
 
-# Create your views here.
-def homePage(request):
-    return render(request,'core/index.html')
 
 def questionnaire(request, questionaire_id):
     questionnaire = get_object_or_404(Questionaire, id=questionaire_id)
@@ -50,5 +53,27 @@ from django.shortcuts import redirect
 def qr_redirect(request):
     return redirect('/questionnaire/1/')
 
+from django.shortcuts import render
 
+def qr(request):
+    return render(request, 'core/qr.html')
 
+#####
+import qrcode
+import base64
+from io import BytesIO
+from django.shortcuts import render
+
+def homePage(request):
+    print("✅ homePage() function was called")  # <-- add this line
+
+    qr_url = "http://127.0.0.1:8000/questionnaire/1/"
+    qr = qrcode.make(qr_url)
+
+    buffer = BytesIO()
+    qr.save(buffer, format="PNG")
+    qr_image = base64.b64encode(buffer.getvalue()).decode()
+
+    print("✅ QR code successfully generated and sent to template!")  # <-- add this line too
+
+    return render(request, "core/index.html", {"qr_image": qr_image})

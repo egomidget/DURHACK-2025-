@@ -9,7 +9,6 @@
     <link rel="icon" type="image/png" href="{% static 'images/logo.png' %}">
     <link rel="stylesheet" href="{% static 'files.css' %}">
 </head>
-
 <body>
     {% include 'core/nav.html' %}
 
@@ -18,20 +17,18 @@
         <p>Building bridges for pulling bitches</p>
 
         <div class="redboxes">
-            <div class="redbox"><p>What is the Redbridge Theory?</p></div>
-            <div class="redbox">
-                <p>Scan QR code</p>
-                {% if qr_image %}
-                    <div style="text-align:center; margin-top:10px;">
-                        <img src="data:image/png;base64,{{ qr_image }}" alt="QR Code" 
-                             style="width:250px; height:250px;">
-                    </div>
-                {% else %}
-                    <p>No QR code generated.</p>
-                {% endif %}
-            </div>
-            <div class="redbox"><p>How does it work?</p></div>
+            <p>What is the Redbridge Theory?</p>
+            <p>Scan QR code</p>
+            <p>How does it work?</p>
         </div>
+
+        {% if qr_image %}
+        <div style="text-align:center; margin-top:20px;">
+            <img src="data:image/png;base64,{{ qr_image }}" alt="QR Code" style="width:250px; height:250px;">
+        </div>
+        {% else %}
+        <p>No QR code generated.</p>
+        {% endif %}
 
         <button type="button">Match now!</button>
     </div>
