@@ -15,6 +15,9 @@ class Person(models.Model):
     session_id      = models.CharField()
     name            = models.CharField()
 
+    def __str__(self):
+        return self.name
+
 class Answers(models.Model):
     question        = models.ForeignKey(Question, on_delete=models.CASCADE)
     response        = models.BigIntegerField(null=True)
@@ -29,7 +32,7 @@ class Match(models.Model):
     score           = models.FloatField()
 
     def format_score(self):
-        return f"{round(self.score * 100, 2)}%"
+        return f"{round(self.score * 100, 2)}"
     
     @classmethod
     def find_match(self, person):

@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>The Redbridge Theory - Loading</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
@@ -28,11 +29,6 @@
     }
 
     .loading-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 25px; 
       animation: fadein 1s ease-in;
     }
 
@@ -58,6 +54,7 @@
       border-radius: 50%;
       animation: spin 1.2s linear infinite;
       box-shadow: 0 0 15px rgba(230, 57, 70, 0.6);
+      margin: 30px auto;
     }
 
     @keyframes spin {
@@ -69,14 +66,41 @@
       from { opacity: 0; transform: scale(0.95); }
       to { opacity: 1; transform: scale(1); }
     }
+
+    .prema-button {
+      padding: 12px 24px;
+      border: none;
+      background-color: #e63946;
+      color: white;
+      font-size: 0.75rem;
+      border-radius: 10px;
+      cursor: pointer;
+      letter-spacing: 1px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      text-decoration: none;
+    }
+
+    .prema-button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+    }
   </style>
 </head>
 
 <body>
-  <div class="loading-container">
-    <h1>Loading...</h1>
-    <p>We’re collecting all the data and finding your match 💘</p>
-    <div class="spinner"></div>
+  <div class="container text-center">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="loading-container mb-4">
+          <h1>Loading...</h1>
+          <p>We’re collecting all the data and finding your match 💘</p>
+          <div class="spinner"></div>
+        </div>
+
+        <a class="prema-button" href="{% url 'process' %}">Process</a>
+      </div>
+    </div>
   </div>
 </body>
 </html>
