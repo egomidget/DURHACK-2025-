@@ -16,7 +16,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from core.views import homePage, questionnaire, qr_redirect, see_match, process_matches
+from core.views import homePage, questionnaire, qr_redirect
+from django.urls import path
+from . import views
+from django.urls import path
+from . import views
+from django.contrib import admin
+from django.urls import path, include
 
 urlpatterns = [
     path("", homePage, name="index"),
@@ -27,4 +33,12 @@ urlpatterns = [
     path("process/", process_matches, name='process_matches')
 ]
 
+urlpatterns = [
+    path('matches/', views.show_matches, name='show_matches'),
 
+]
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('', include('core.urls')),  
+]
