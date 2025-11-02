@@ -114,6 +114,9 @@ def pairsIntoNames(pairTuples, ogVectorList, similarities): #get format like [("
 
         
 def input_vectors_output_pairs(allTheAnswers):
+    if len(allTheAnswers)%2 != 0:#if odd number
+        #hardcode mercedes in (and add mercedes info to array)
+        allTheAnswers.append(allTheAnswers[1][:-2]*0.5) #mercedes plz consider and fix - intenion here was to append mercedes numbers to array because for code it should be in there. just halved the first one though may have issues with the string... look at plzlz
     #1.get the sliding scale values for each question (input) and have it as a vector, represented in a list - list for the methods like sum
 
     #2.get the similarity score from function and have as a 2d array, null for itself position
