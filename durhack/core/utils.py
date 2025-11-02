@@ -27,22 +27,59 @@ def v_cosine_similarity(vector1,vector2):
     v1dotv2 = dot_p(vector1,vector2)#do the dot product
     v1size = sqrt_sum(vector1)#do the sqrt of sum for each
     v2size = sqrt_sum(vector2)
+    if v1size == 0 or v2size == 0:
+        return 0
     cSimilarity = v1dotv2 / (v1size * v2size)#cos theta = dotp divited by (size1 x size2)
     return cSimilarity #return a value between -1 and 1: 1 means more similar
 
-#FILLING 2D ARRAY FUNCTIONS
-def array_matches_list(vectorsArray): #2d vectors input as an array
-    dimension = len(vectorsArray) #minus 2 to ignore name and session id
-    #use a for loop to iterate through the 2d array for matrix and do the v cosine similarity for 
-    similarityArray = [[None] * dimension for _ in range(dimension)]#make list
-    for row in range(0,dimension): 
-        for col in range(row+1,dimension): #optimised by mirroring over the leading diagonal and only filling in top triangle (change the 0 here to i+1 and mirror) not doing yet incase breaks
+# #FILLING 2D ARRAY FUNCTIONS
+# def array_matches_list(vectorsArray): #2d vectors input as an array
+#     dimension = len(vectorsArray) #minus 2 to ignore name and session id
+#     #use a for loop to iterate through the 2d array for matrix and do the v cosine similarity for 
+#     similarityArray = [[None] * dimension for _ in range(dimension)]#make list
+#     for row in range(0,dimension): 
+#         for col in range(row+1,dimension): #optimised by mirroring over the leading diagonal and only filling in top triangle (change the 0 here to i+1 and mirror) not doing yet incase breaks
+#             if row == col:
+#                 continue
+#             similarityValue = v_cosine_similarity(vectorsArray[row],vectorsArray[col])
+#             similarityArray[row][col] = similarityValue
+#             similarityArray[col][row] = similarityValue #mirroring across leading diagonal
+#     return similarityArray
+
+
+def array_matches_list(vectors_dict):
+    """
+    Compute pairwise cosine similarities for a dict of vectors
+    and return a 2D list (matrix) of similarity values.
+
+    Args:
+        vectors_dict (dict): { 'session_id': [v1, v2, ...], ... }
+
+    Returns:
+        list[list[float]]: 2D symmetric similarity matrix
+    """
+    session_ids = list(vectors_dict.keys())
+    dimension = len(session_ids)
+
+    # Initialize empty square matrix
+    similarity_array = [[None] * dimension for _ in range(dimension)]
+
+    for row in range(dimension):
+        for col in range(row, dimension):  # only upper triangle
             if row == col:
-                continue
-            similarityValue = v_cosine_similarity(vectorsArray[row],vectorsArray[col])
-            similarityArray[row][col] = similarityValue
-            similarityArray[col][row] = similarityValue #mirroring across leading diagonal
-    return similarityArray
+                similarity = 1.0  # self-similarity
+            else:
+                similarity = v_cosine_similarity(
+                    vectors_dict[session_ids[row]],
+                    vectors_dict[session_ids[col]]
+                )
+            # Fill both [row][col] and [col][row] (symmetric)
+            similarity_array[row][col] = similarity
+            similarity_array[col][row] = similarity
+
+    return similarity_array
+
+
 
 #GETTING SIMILARITY PAIR
 #sub function - create graph
@@ -63,9 +100,10 @@ def graph_match(arrayOfSimilarities):
 
 def pairsIntoNames(pairTuples, ogVectorList, similarities): #get format like [("ID1","ID3",0.99),("ID2","ID6",0.67)]
     results = []
+    session_ids = list(ogVectorList.keys())
     for i, j in pairTuples:
-        id1 = ogVectorList[i][-1]  #getting the id from the og vector big list (assuming id is last)
-        id2 = ogVectorList[j][-1]
+        id1 = session_ids[i]  #getting the id from the og vector big list (assuming id is last)
+        id2 = session_ids[j]
        
         similarity = similarities[i][j]
         results.append((id1, id2, similarity))

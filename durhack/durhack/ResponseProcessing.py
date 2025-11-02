@@ -5,10 +5,10 @@
 
 # Import the necessary models from the 'core' application
 from core.models import Person, Answers, Question
-from utils import *#i wanna import my utils -sarah
+from core.utils import *#i wanna import my utils -sarah
 def process_answers():
     # Initialize the main list that will hold all individual person's answer lists
-    PeoplesAnswers = []
+    PeoplesAnswers = {}
 
     # Retrieve all Person objects from the database
     all_people = Person.objects.all()
@@ -29,13 +29,15 @@ def process_answers():
             person_list.append(answer.response)
 
         # As requested, append the person's name as the second-to-last element
-        person_list.append(person.name)
+        # person_list.append(person.name)
 
         # Append the person's session_id as the last element
-        person_list.append(person.session_id)
+        # person_list.append(person.session_id)
 
         # Add the fully populated list for this person to the main list
-        PeoplesAnswers.append(person_list)
+        if person_list != []:
+
+            PeoplesAnswers[str(person.session_id)] = person_list
 
     # The script finishes here.
     # The 'PeoplesAnswers' list is now populated in memory and can be

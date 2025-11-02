@@ -6,6 +6,18 @@ class DynamicQuestionnaireForm(forms.Form):
         questions = kwargs.pop('questions', [])
         super().__init__(*args, **kwargs)
 
+        self.fields['name'] = forms.CharField(
+            label = "Your name",
+            widget=forms.Textarea(
+                    attrs={
+                        "rows": 1,
+                        "class": "form-control",
+                        "placeholder": "Type your answer..."
+                    }
+                ),
+            required=True
+        )
+
         for question in questions:
             
             field_name = f"question_{question.id}"
@@ -13,4 +25,6 @@ class DynamicQuestionnaireForm(forms.Form):
                 label=question.text,
                 widget=forms.NumberInput(attrs={'type':'range', 'step': '1', 'min': '0', 'max': '10', 'class':'form-range'}), 
                 required=False)
+            
+        
     
